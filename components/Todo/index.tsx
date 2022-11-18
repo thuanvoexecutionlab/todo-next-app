@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Row, Tag, Checkbox } from "antd";
-import { useAppDispatch } from "../../app/hooks";
-import { toggleTodo } from "../../features/todo/todoSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectTodoById, toggleTodo } from "../../features/todo/todoSlice";
 
 interface TodoProps {
   id: string;
@@ -20,7 +20,8 @@ const priorityColorMapping: priorityColors = {
 };
 
 export default function Todo({ id, name, priority }: TodoProps) {
-  const [checked, setChecked] = useState(false);
+  const todo = useAppSelector((state) => selectTodoById(state, id));
+  const [checked, setChecked] = useState(todo?.completed);
   const dispatch = useAppDispatch();
 
   const toggleCheckbox = () => {

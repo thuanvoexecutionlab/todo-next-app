@@ -49,7 +49,7 @@ export const { addTodo, toggleTodo } = todoListSlice.actions;
 
 export const selectTodoList = (state: RootState) => {
   const { search, status, priority } = state.filters;
-    const filteredTodos = state.todoList.filter((todo) => {
+  const filteredTodos = state.todoList.filter((todo) => {
     const searchMatch = todo.name.toLowerCase().includes(search.toLowerCase());
     const statusMatch =
       status === "All" ? true : todo.completed === (status === "Completed");
@@ -59,5 +59,8 @@ export const selectTodoList = (state: RootState) => {
   });
   return filteredTodos;
 };
+
+export const selectTodoById = (state: RootState, todoId: string) =>
+  state.todoList.find((todo) => todo.id === todoId);
 
 export default todoListSlice.reducer;
